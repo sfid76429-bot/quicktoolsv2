@@ -1,0 +1,24 @@
+kind = "web"
+previewPath = "/"
+title = "QuickTools"
+description = "A fast, privacy-friendly collection of 15 browser-based utilities. Every tool runs locally in the browser and deploys as plain static files."
+version = "1.0.0"
+id = "artifacts/quicktools"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19023
+
+[services.development]
+run = "pnpm --filter @workspace/quicktools run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/quicktools", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/quicktools/dist/public"
+
+[services.env]
+PORT = "19023"
+BASE_PATH = "/"

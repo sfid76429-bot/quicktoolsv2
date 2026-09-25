@@ -1,4 +1,4 @@
-modules = ["nodejs-24"]
+modules = ["nodejs-24", "python-base-3.13"]
 
 [deployment]
 router = "application"
@@ -11,10 +11,76 @@ env = { "CI" = "true" }
 [workflows]
 runButton = "Project"
 
+[[workflows.workflow]]
+name = "artifacts/quicktools: web"
+author = "agent"
+mode = "sequential"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+artifactId = "artifacts/quicktools"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pnpm --filter @workspace/quicktools run dev"
+cwd = "./artifacts/quicktools"
+waitForPort = 19023
+ensurePreviewReachable = "/"
+router = "path"
+
+[workflows.workflow.tasks.env]
+PORT = "19023"
+BASE_PATH = "/"
+
+[[workflows.workflow]]
+name = "gitpush"
+mode = "sequential"
+author = 55600349
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git config user.email \"noobra24l8w@gmail.com\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git add ."
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git commit -m \"Initial QuickTools commit\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git push"
+
+[[workflows.workflow]]
+name = "commit"
+mode = "sequential"
+author = 55600349
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git add ."
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git commit -m \"Newcommit\""
+
+[[workflows.workflow]]
+name = "ng"
+mode = "sequential"
+author = 55600349
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git config --global user.email \"noobra24l8w@gmail.com\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "git config --global user.name \"Your Name\""
+
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true
 
-[postMerge]
-path = "scripts/post-merge.sh"
-timeoutMs = 20000
+[nix]

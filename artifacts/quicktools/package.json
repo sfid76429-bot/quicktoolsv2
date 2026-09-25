@@ -1,0 +1,13 @@
+{
+  "name": "@workspace/quicktools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "rm -rf dist/public && mkdir -p dist/public && cp -a public/. dist/public/"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

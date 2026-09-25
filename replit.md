@@ -1,45 +1,23 @@
-# [Project name]
+# QuickTools
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+QuickTools is a privacy-first collection of 15 utilities delivered as independent static HTML pages.
 
-## Run & Operate
+## Source of truth
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `artifacts/quicktools/public/` contains the complete Cloudflare Pages site.
+- HTML pages live in route-named directories; shared browser code and styles live in `public/assets/`.
+- Every feature runs client-side. Do not add a backend, database, router, TypeScript, or browser-to-server API calls.
 
-## Stack
+## Local preview
 
-- pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- `pnpm --filter @workspace/quicktools run dev` starts the local preview.
+- `pnpm --filter @workspace/quicktools run build` copies the static site to `artifacts/quicktools/dist/public/`.
 
-## Where things live
+## Cloudflare Pages
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- Framework preset: None
+- Build command: leave blank
+- Build output directory: `artifacts/quicktools/public`
+- Environment variables: none
 
-## Architecture decisions
-
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
-
-## User preferences
-
-_Populate as you build — explicit user instructions worth remembering across sessions._
-
-## Gotchas
-
-_Populate as you build — sharp edges, "always run X before Y" rules._
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+The Cloudflare deployment is the contents of `public/` as-is. It does not run Node.js.
